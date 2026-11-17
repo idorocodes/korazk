@@ -9,8 +9,8 @@ export const VERIFY_CU = '77,412';
 
 /** Placeholder destinations — swap for real URLs when they exist. */
 export const LINKS = {
-  docs: '#developers',
-  github: '#developers',
+  docs: 'https://www.github.com/idorocodes/korazk',
+  github: 'https://www.github.com/idorocodes/korazk',
 };
 
 export const HEX: string[] = Array.from({ length: 256 }, (_, i) => i.toString(16).padStart(2, '0'));
