@@ -73,7 +73,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: 1rem;
     background: var(--color-ink-950);
     color-scheme: dark;
   }

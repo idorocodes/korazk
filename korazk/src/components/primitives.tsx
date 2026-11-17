@@ -5,7 +5,7 @@ import { BRAND } from '../lib/proof';
 import { TOAST_EVENT, copyText, cssVars, toast, useInView } from '../lib/hooks';
 
 /** Shared page gutter. */
-export const WRAP = 'mx-auto w-full max-w-[1240px] px-5 sm:px-8';
+export const WRAP = 'mx-auto w-full max-w-auto px-5 sm:px-8';
 
 type Tone = 'proof' | 'witness' | 'exposed';
 

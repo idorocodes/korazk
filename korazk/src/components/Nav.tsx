@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ArrowRight, Menu, Wallet, X } from 'lucide-react';
 import { LogoMark, Wordmark } from './primitives';
-import { toast } from '../lib/hooks';
+
 import { BRAND } from '../lib/proof';
 
 const SECTIONS = [
@@ -40,69 +40,15 @@ function useActiveSection(ids: string[]) {
   return active;
 }
 
-interface PublicKeyLike {
-  toString(): string;
-}
-interface SolanaProvider {
-  connect?: () => Promise<unknown>;
-  disconnect?: () => Promise<unknown> | void;
-  publicKey?: PublicKeyLike | null;
-}
-interface WalletWindow {
-  phantom?: { solana?: SolanaProvider };
-  solflare?: SolanaProvider;
-  solana?: SolanaProvider;
-}
 
-/** Talks to an injected Solana wallet (Phantom, Solflare…) when one is present. */
-function useWallet() {
-  const [address, setAddress] = useState<string | null>(null);
-  const [pending, setPending] = useState(false);
 
-  const toggle = useCallback(async () => {
-    const w = window as unknown as WalletWindow;
-    const provider = w.phantom?.solana ?? w.solflare ?? w.solana;
 
-    if (address) {
-      try {
-        await provider?.disconnect?.();
-      } catch {
-        /* nothing to clean up */
-      }
-      setAddress(null);
-      toast('Wallet disconnected.');
-      return;
-    }
-    if (!provider?.connect) {
-      toast('No Solana wallet found in this browser. Install Phantom or Solflare to connect.');
-      return;
-    }
-
-    setPending(true);
-    try {
-      const res = (await provider.connect()) as { publicKey?: PublicKeyLike } | boolean | undefined;
-      const key = (typeof res === 'object' && res?.publicKey ? res.publicKey : provider.publicKey)?.toString();
-      if (key) {
-        setAddress(key);
-        toast('Wallet connected.');
-      } else {
-        toast('The wallet did not return an address.');
-      }
-    } catch {
-      toast('Wallet connection was cancelled.');
-    } finally {
-      setPending(false);
-    }
-  }, [address]);
-
-  return { address, pending, toggle };
-}
 
 export function Nav({ onDemo }: { onDemo: () => void }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const active = useActiveSection(SECTION_IDS);
-  const wallet = useWallet();
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16);
@@ -125,7 +71,7 @@ export function Nav({ onDemo }: { onDemo: () => void }) {
     onDemo();
   };
 
-  const short = wallet.address ? `${wallet.address.slice(0, 4)}…${wallet.address.slice(-4)}` : null;
+ 
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-4">
@@ -156,25 +102,7 @@ export function Nav({ onDemo }: { onDemo: () => void }) {
         </ul>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <button
-            type="button"
-            onClick={wallet.toggle}
-            disabled={wallet.pending}
-            className="btn btn-ghost h-9 px-3.5 text-[13px]"
-          >
-            {short ? (
-              <>
-                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-[1px] bg-proof" />
-                <span className="font-mono">{short}</span>
-              </>
-            ) : (
-              <>
-                <Wallet className="h-3.5 w-3.5" />
-                <span className="xl:hidden">Connect</span>
-                <span className="hidden xl:inline">Connect Wallet</span>
-              </>
-            )}
-          </button>
+         
           <button type="button" onClick={demo} className="btn btn-primary h-9 px-4 text-[13px]">
             Try Live Demo
           </button>
@@ -212,21 +140,7 @@ export function Nav({ onDemo }: { onDemo: () => void }) {
             ))}
           </ul>
           <div className="mt-3 grid grid-cols-2 gap-2 border-t border-white/[0.08] pt-3">
-            <button
-              type="button"
-              onClick={wallet.toggle}
-              disabled={wallet.pending}
-              className="btn btn-ghost h-11 text-[13.5px]"
-            >
-              {short ? (
-                <span className="font-mono">{short}</span>
-              ) : (
-                <>
-                  <Wallet className="h-4 w-4" />
-                  Connect Wallet
-                </>
-              )}
-            </button>
+           
             <button type="button" onClick={demo} className="btn btn-primary h-11 text-[13.5px]">
               Try Live Demo
             </button>
