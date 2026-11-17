@@ -4,7 +4,7 @@ resolver = "3"
 # verifier crate `xark export` generates for each circuit). `xark add` and `xark
 # export` keep this line to the ones that hold a crate: cargo reads a glob that
 # matches nothing as a path that isn't there.
-members = ["circuits/*"]
+members = ["circuits/*", "clients/*/rust"]
 
 # The programs' release profile. A circuit builds with its own settings (`xark
 # build` sets overflow checks and size optimisation), so these don't change it.

@@ -8,6 +8,8 @@ crate-type = ["lib"]
 
 [dependencies]
 xark = { version = "0.4" }
+xark-poseidon2 = "0.4"
+xark-ed25519 = "0.4"
 # From git:               xark = { git = "https://github.com/blueshift-gg/xark" }
 # From a local checkout:  xark = { path = "../xark/crates/lang" }
 
