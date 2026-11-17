@@ -90,9 +90,9 @@ korazk/
 
 | Folder | What it is, simply | Built with |
 | --- | --- | --- |
-| **`korazk/`** | The website you interact with. It understands your plain-English request, builds the proof inside your browser so private data stays on your device, and creates shareable proof links and QR codes. | TypeScript, Next.js, WebAssembly (WASM) |
+| **`korazk/`** | The website you interact with. It understands your plain-English request, builds the proof inside your browser so private data stays on your device, and creates shareable proof links and QR codes. | TypeScript, React.js, WebAssembly (WASM) |
 | **`korazk-circuit/`** | The rulebook. A "circuit" is the mathematical recipe for one kind of proof, such as "this number is above that number". This folder defines the recipes and produces the code that Solana uses to check proofs. | Rust (using `xark`), `no_std` Solana verifier |
-| **`server/`** | The attestor. It checks that the data from your bank or ID provider is real, signs a digital stamp, and then wipes the raw data from memory. It never stores personal information. | Rust (Axum) |
+| **`server/`** | The attestor. It checks that the data from your bank or ID provider is real, signs a digital stamp, and then wipes the raw data from memory. It never stores personal information. | Express.js |
 
 The server connects to providers such as **Mono, Okra, Dojah, Paystack, and Monnify**.
 
@@ -162,15 +162,15 @@ xark build
 ```bash
 cd server
 cp .env.example .env   # Add your Ed25519 signing key and sandbox API keys
-cargo run
+pnpm dev
 ```
 
 ### 3. Run the website (`korazk/`)
 
 ```bash
 cd korazk
-npm install
-npm run dev
+pnpm install
+pnpm run dev
 ```
 
 ---
