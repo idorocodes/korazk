@@ -198,7 +198,7 @@ export function Hero({ demoSignal }: { demoSignal: number }) {
             style={cssVars({ '--i': 12 })}
           >
             Type what you want to prove in plain English. Generate a{' '}
-            <strong className="font-medium text-bone">256-byte zero-knowledge proof</strong> locally and verify it on
+            <strong className="font-medium text-bone"> zero-knowledge proof</strong> locally and verify it on
             Solana — without ever exposing your NIN, BVN, or full bank statement.
           </p>
 
